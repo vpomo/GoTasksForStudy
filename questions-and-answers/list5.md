@@ -378,3 +378,271 @@ ctx, span := tracer.Start(ctx, "operation")
 defer span.End
 ```
 
+59. Как реализовать кастомный Kubernetes-контроллер на Go?
+- Ответ: Используйте клиентскую библиотеку client-go. Пример:
+```go
+import (
+    "k8s.io/client-go/tools/cache"
+    "k8s.io/apimachinery/pkg/util/wait"
+)
+// Создаем informer для отслеживания ресурсов
+informer := cache.NewSharedIndexInformer(
+    &cache.ListWatch{},
+    &v1.Pod{},
+    resyncPeriod,
+    cache.Indexers{},
+)
+informer.AddEventHandler(cache.ResourceEventHandlerFuncs{
+    AddFunc: func(obj interface{}) { /* обработка создания */ },
+})
+go informer.Run(wait.NeverStop)
+```
+
+60. Как настроить автоскейлинг микросервиса в Kubernetes?
+- Ответ: Используйте HorizontalPodAutoscaler (HPA):
+```yaml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: my-service-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: my-service
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 80
+```
+
+61.  Как реализовать шаблон Saga для распределенных транзакций?
+- Ответ: Saga координирует цепочку событий с компенсирующими операциями. Пример реализации:
+```go
+func ExecuteSaga() error {
+    if err := step1(); err != nil {
+        return err
+    }
+    if err := step2(); err != nil {
+        compensateStep1() // Откат первой операции
+        return err
+    }
+    return nil
+}
+```
+
+62. Как использовать Istio для управления трафиком между микросервисами?
+- Ответ: Настройте VirtualService и DestinationRule для маршрутизации и политик:
+```yaml
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: my-service
+spec:
+  hosts: ["my-service"]
+  http:
+  - route:
+    - destination:
+        host: my-service
+        subset: v1
+      weight: 90
+    - destination:
+        host: my-service
+        subset: v2
+      weight: 10
+```
+
+63. Как реализовать Canary-развертывание в Kubernetes?
+- Ответ: Используйте постепенное направление трафика через Istio или HPA:
+```yaml
+# Istio VirtualService
+http:
+- route:
+  - destination:
+      host: my-service
+      subset: v1
+    weight: 95
+  - destination:
+      host: my-service
+      subset: v2
+    weight: 5
+```
+
+64. Как организовать централизованное логирование для микросервисов?
+- Ответ: Используйте Fluentd + Elasticsearch + Kibana (EFK) или Loki + Grafana. Пример отправки логов:
+```go
+import "github.com/sirupsen/logrus"
+func main() {
+    logrus.SetOutput(logstashConn) // или HTTP-клиент для Loki
+}
+```
+
+65. Как настроить распределенную трассировку между микросервисами?
+- Ответ: Интегрируйте OpenTelemetry:
+```go
+import (
+    "go.opentelemetry.io/otel"
+    "go.opentelemetry.io/otel/exporters/jaeger"
+)
+func initTracer() {
+    exporter, _ := jaeger.New(jaeger.WithCollectorEndpoint())
+    tp := sdktrace.NewTracerProvider(sdktrace.WithBatcher(exporter))
+    otel.SetTracerProvider(tp)
+}
+```
+
+
+66. Как управлять секретами в Kubernetes?
+- Ответ: Используйте Secrets или внешние системы (HashiCorp Vault). Пример:
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-secret
+type: Opaque
+data:
+  password: <base64-encoded>
+```
+И подключите к поду:
+```yaml
+env:
+- name: DB_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: db-secret
+      key: password
+```
+
+67.  Как реализовать Circuit Breaker для вызовов между микросервисами?
+- Ответ: Используйте gobreaker:
+```go
+cb := gobreaker.NewCircuitBreaker(gobreaker.Settings{
+    Name: "my-service",
+    ReadyToTrip: func(counts gobreaker.Counts) bool {
+        return counts.ConsecutiveFailures > 5
+    },
+})
+result, err := cb.Execute(func() (interface{}, error) {
+    return client.CallService()
+})
+```
+
+68. Как настроить взаимную аутентификацию (mTLS) между микросервисами?
+- Ответ: Включите mTLS в Istio:
+```yaml
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: default
+spec:
+  mtls:
+    mode: STRICT
+```
+
+69. Как работать с очередями сообщений (Kafka) в Go?
+- Ответ: Используйте sarama:
+```go
+producer, _ := sarama.NewSyncProducer([]string{"kafka:9092"}, nil)
+producer.SendMessage(&sarama.ProducerMessage{
+    Topic: "orders",
+    Value: sarama.StringEncoder("order-data"),
+})
+```
+
+70. Как реализовать серверless-функцию на Go в AWS Lambda?
+- Ответ: Используйте aws-lambda-go:
+```go
+package main
+import (
+    "github.com/aws/aws-lambda-go/lambda"
+)
+func HandleRequest() (string, error) {
+    return "Hello, Serverless!", nil
+}
+func main() {
+    lambda.Start(HandleRequest)
+}
+```
+
+71. Как автоматизировать деплой микросервисов с помощью GitOps?
+- Ответ: Используйте ArgoCD или Flux. Пример манифеста для ArgoCD:
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-service
+spec:
+  project: default
+  source:
+    repoURL: git@github.com:my/repo.git
+    path: k8s/
+    targetRevision: HEAD
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+```
+
+72. Как настроить политики сетевой безопасности в Kubernetes?
+- Ответ: Используйте NetworkPolicy:
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-frontend
+spec:
+  podSelector:
+    matchLabels:
+      app: backend
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: frontend
+    ports:
+    - protocol: TCP
+      port: 8080
+```
+
+73. Как реализовать A/B-тестирование в микросервисной архитектуре?
+- Ответ: Используйте заголовки запросов и маршрутизацию в Istio:
+```yaml
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+spec:
+  http:
+  - match:
+    - headers:
+        x-test-group:
+          exact: "experimental"
+    route:
+    - destination:
+        host: my-service
+        subset: experimental
+  - route:
+    - destination:
+        host: my-service
+        subset: stable
+```
+
+74. Как мониторить производительность микросервисов в реальном времени?
+- Ответ: Настройте Prometheus + Grafana. Пример метрик в Go:
+```go
+import "github.com/prometheus/client_golang/prometheus"
+var (
+    requestsTotal = prometheus.NewCounterVec(
+        prometheus.CounterOpts{
+            Name: "http_requests_total",
+            Help: "Total HTTP requests",
+        },
+        []string{"path"},
+    )
+)
+func init() {
+    prometheus.MustRegister(requestsTotal)
+}
+```
