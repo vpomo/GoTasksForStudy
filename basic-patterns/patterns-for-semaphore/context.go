@@ -33,7 +33,8 @@ func main() {
 	}
 
 	go func() {
-		time.Sleep(2 * time.Second)
+		time.Sleep(1 * time.Second)
+		fmt.Println("Cancel")
 		cancel()
 	}()
 

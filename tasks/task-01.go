@@ -8,9 +8,15 @@ type Student struct {
 }
 
 func main() {
-	var pa *Student   // pa == nil
+	var pa *Student // pa == nil
+	fmt.Println(pa) // <nil>
+
 	pa = new(Student) // pa == &Student{"", 0}
-	pa.Name = "Alex"  // pa == &Student{"Alex", 0}
+	fmt.Println(pa)   // &{ 0}
+
+	pa.Name = "Alex" // pa == &Student{"Alex", 0}
+	fmt.Println(pa)  // &{Alex 0}
+
 	pa.Age = 22
-	fmt.Println(pa)
+	fmt.Println(pa) // &{Alex 22}
 }

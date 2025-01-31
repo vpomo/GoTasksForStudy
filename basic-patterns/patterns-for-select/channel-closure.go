@@ -11,6 +11,7 @@ func main() {
 	go func() {
 		time.Sleep(1 * time.Second)
 		c <- "one"
+		time.Sleep(1 * time.Second)
 		close(c)
 	}()
 

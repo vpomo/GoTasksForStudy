@@ -10,7 +10,7 @@ func generator(ch chan int) {
 	go func() {
 		r := rand.New(rand.NewSource(time.Now().UnixNano()))
 		for i := 1; i < 10; i++ {
-			ch <- r.Intn(i)
+			ch <- r.Intn(10)
 		}
 		close(ch)
 	}()

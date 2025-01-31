@@ -26,9 +26,9 @@ func intersection(a, b []int) []int {
 
 func main() {
 
-	a := []int{37, 5, 1, 2}
-	b := []int{6, 2, 4, 37}
-	// [2, 37]
+	a := []int{37, 5, 1, 2, 8, 8}
+	b := []int{6, 8, 2, 4, 37}
+	// [8, 2, 37]
 	fmt.Printf("%v\n", intersection(a, b))
 	a = []int{1, 1, 1}
 	b = []int{1, 1, 1, 1}

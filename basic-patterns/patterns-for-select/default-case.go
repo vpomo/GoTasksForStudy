@@ -12,7 +12,7 @@ func main() {
 	for {
 		select {
 		case <-tick:
-			fmt.Println("tick.")
+			fmt.Println("tick")
 		case <-boom:
 			fmt.Println("BOOM!")
 			return

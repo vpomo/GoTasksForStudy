@@ -16,3 +16,6 @@ func main() {
 		fmt.Printf("i=%d,type: %T\n", i, i) // i=123,type: int64
 	}
 }
+
+// i=123,type: int
+// i=123,type: int64
