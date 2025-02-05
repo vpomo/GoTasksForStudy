@@ -5,22 +5,19 @@ import (
 	"sync"
 )
 
+func readChan(a []int, wg *sync.WaitGroup, outCh chan int) {
+	defer wg.Done()
+	for _, num := range a {
+		outCh <- num
+	}
+}
+
 func mergeSlice(x, y []int, ch chan int) {
 	defer close(ch)
 	wg := sync.WaitGroup{}
 	wg.Add(2)
-	go func(a []int, wg *sync.WaitGroup) {
-		defer wg.Done()
-		for _, num := range a {
-			ch <- num
-		}
-	}(x, &wg)
-	go func(a []int, wg *sync.WaitGroup) {
-		defer wg.Done()
-		for _, num := range a {
-			ch <- num
-		}
-	}(y, &wg)
+	go readChan(x, &wg, ch)
+	go readChan(y, &wg, ch)
 
 	wg.Wait()
 }

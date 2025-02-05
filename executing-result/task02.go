@@ -16,3 +16,9 @@ func f(n int) (r int) {
 func main() {
 	fmt.Println(f(3))
 }
+
+/*
+r= 9
+r= 6
+4
+*/

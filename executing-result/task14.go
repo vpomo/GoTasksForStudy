@@ -8,6 +8,7 @@ import (
 func main() {
 	runtime.GOMAXPROCS(1)
 	done := false
+
 	go func() {
 		done = true
 	}()

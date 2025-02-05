@@ -19,7 +19,7 @@ func main() {
 		}
 	}
 	fmt.Println(newStr.String())
-	// ½1345170958
+	// 1345170958
 
 	//work with index of slice
 	a := []int{1, 2, 3, 4, 5}

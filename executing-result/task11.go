@@ -31,12 +31,14 @@ func main() {
 
 	d1 := Student{"Albert", 1}
 	d2 := Student{"Albert", 1}
-	fmt.Println(d1, d2)   // {Albert 1} {Albert 1}
-	fmt.Println(d1 == d2) // true
+	fmt.Println(d1, d2)     // {Albert 1} {Albert 1}
+	fmt.Println(d1 == d2)   // true
+	fmt.Println(&d1 == &d2) // false
 
 	e1 := &Student{"Albert", 1}
 	e2 := &Student{"Albert", 1}
-	fmt.Println(e1, e2)   // &{Albert 1} &{Albert 1}
-	fmt.Println(e1 == e2) // false
+	fmt.Println(e1, e2)     // &{Albert 1} &{Albert 1}
+	fmt.Println(e1 == e2)   // false
+	fmt.Println(*e1 == *e2) // true
 
 }

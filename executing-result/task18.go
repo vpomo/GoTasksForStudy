@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	timeout := 3 * time.Second
+	timeout := 3000 * time.Millisecond
 	startTime := time.Now().UnixNano()
 	fmt.Println("start context ...")
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)

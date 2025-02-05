@@ -13,10 +13,12 @@ func worker01() chan int {
 		time.Sleep(time.Second * 3)
 		ch <- 42
 		fmt.Println("wrote down to channel")
+		defer close(ch)
 	}()
 
 	return ch
 }
+
 func main() {
 	fmt.Println("reading ...")
 	_, _ = <-worker01(), <-worker01()
