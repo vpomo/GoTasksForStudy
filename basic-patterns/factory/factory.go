@@ -41,11 +41,13 @@ func (f *ConcreteFactoryB) CreateProduct() Product {
 }
 
 func main() {
-	factoryA := &ConcreteFactoryA{}
-	productA := factoryA.CreateProduct()
-	fmt.Println("Created product:", productA.GetName())
+	factories := []Factory{
+		&ConcreteFactoryA{},
+		&ConcreteFactoryB{},
+	}
 
-	factoryB := &ConcreteFactoryB{}
-	productB := factoryB.CreateProduct()
-	fmt.Println("Created product:", productB.GetName())
+	for _, factory := range factories {
+		product := factory.CreateProduct()
+		fmt.Println("Created product:", product.GetName())
+	}
 }

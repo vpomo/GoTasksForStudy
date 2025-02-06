@@ -8,11 +8,12 @@ import (
 func main() {
 	requests := make(chan int, 5)
 	for i := 1; i <= 5; i++ {
-		requests <- i
+		j := i
+		requests <- j
 	}
 	close(requests)
 
-	limiter := time.Tick(200 * time.Millisecond)
+	limiter := time.Tick(100 * time.Millisecond)
 
 	for req := range requests {
 		<-limiter
@@ -26,14 +27,15 @@ func main() {
 	}
 
 	go func() {
-		for t := range time.Tick(200 * time.Millisecond) {
+		for t := range time.Tick(2000 * time.Millisecond) {
 			burstyLimiter <- t
 		}
 	}()
 
 	burstyRequests := make(chan int, 5)
 	for i := 1; i <= 5; i++ {
-		burstyRequests <- i
+		j := i
+		burstyRequests <- j
 	}
 	close(burstyRequests)
 

@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func f(n int) (r int) {
+func ff(n int) (r int) {
 	a, r := n-1, n+1
 	if a+a == r {
 		c, r := n, n*n       //!!! this is new shadowed r
@@ -14,7 +14,7 @@ func f(n int) (r int) {
 }
 
 func main() {
-	fmt.Println(f(3))
+	fmt.Println(ff(3))
 }
 
 /*
