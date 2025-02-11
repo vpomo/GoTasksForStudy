@@ -14,7 +14,7 @@ func workerSt(id int, sem chan struct{}, wg *sync.WaitGroup) {
 		time.Sleep(time.Second)
 		fmt.Printf("Worker %d done\n", id)
 		<-sem
-	case <-time.After(2 * time.Second):
+	case <-time.After(1 * time.Second):
 		fmt.Printf("Worker %d timed out\n", id)
 	}
 }
