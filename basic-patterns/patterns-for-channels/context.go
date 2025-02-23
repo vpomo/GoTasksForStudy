@@ -23,6 +23,8 @@ func main() {
 	defer cancel()
 
 	c := make(chan int)
+	defer close(c)
+
 	go workerC(ctx, c)
 
 	for i := 0; i < 5; i++ {
