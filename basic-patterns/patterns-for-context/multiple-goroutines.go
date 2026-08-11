@@ -31,3 +31,21 @@ func main() {
 	cancel()
 	time.Sleep(1 * time.Second)
 }
+
+/*
+Worker 3 working
+Worker 2 working
+Worker 1 working
+Worker 2 working
+Worker 3 working
+Worker 1 working
+Worker 1 working
+Worker 3 working
+Worker 2 working
+Worker 3 working
+Worker 1 working
+Worker 2 working
+Worker 1 canceled
+Worker 2 canceled
+Worker 3 canceled
+*/

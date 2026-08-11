@@ -23,6 +23,6 @@ func main() {
 - flag.IpVar(&port, "port")
 - flag.StringVar(&port, "port", "8000", "port number")
 + flag.IntVar(&port, "port", 8000, "port number")
-- в init нельзя добалять парсинг аргументов
+- в init нельзя добавлять парсинг аргументов
 - Не знаю
 */

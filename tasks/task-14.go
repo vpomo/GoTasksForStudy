@@ -51,3 +51,11 @@ func main() {
 		fmt.Println(num)
 	}
 }
+
+/*
+2
+4
+8
+12
+14
+*/
