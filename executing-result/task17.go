@@ -11,6 +11,6 @@ func main() {
 	var n = make(map[string]float64)
 	n["pi"] = 3.141628
 
-	fmt.Println("m", m) //map[]
-	fmt.Println("n", n) //map[pi:3.141628]
+	fmt.Println("m", m) //m map[]
+	fmt.Println("n", n) //n map[pi:3.141628]
 }

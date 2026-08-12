@@ -10,8 +10,11 @@ func main() {
 	y := a[2:]
 	fmt.Println(y) //[2 3]
 	fmt.Println(a) // [0 1 2 3]
+
 	x = append(x, y...)
 	fmt.Println(x) // [0 2 3]
+	fmt.Println(y) // [3 3]
+
 	fmt.Println(a) // [0 2 3 3]
 	x = append(x, y...)
 	fmt.Println(a, x) // [0 2 3 3] [0 2 3 3 3]

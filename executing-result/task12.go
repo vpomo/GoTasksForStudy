@@ -8,7 +8,7 @@ func main() {
 	s2 := s1
 	s2[0] = 1
 	fmt.Println("s1", s1) // [1]
-	s1 = append(s1, 42)
+	s1 = append(s1, 42)   // По другому адресу теперь расположен
 	s2[0] = 21
 	fmt.Println("s1", s1) // [1, 42]
 	fmt.Println("s2", s2) // [21]
