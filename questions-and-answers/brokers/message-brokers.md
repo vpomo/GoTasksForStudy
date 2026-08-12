@@ -113,7 +113,7 @@ Pull — для распределенных систем с высокой на
 - Транзакции: Атомарная фиксация на стороне брокера и потребителя (Kafka Transactions, RabbitMQ с плагинами).
 - Дедупликация: Сохранение идентификаторов сообщений и проверка их перед обработкой.
 
-![img_2.png](img_2.png)
+![img_2.png](../img_2.png)
 
 
 Как выбрать режим?
@@ -224,7 +224,7 @@ ch.ExchangeDeclare("logs", "fanout", true, false, false, false, nil)
 ch.Publish("logs", "", false, false, amqp.Publishing{Body: []byte("Hello!")})
 ```
 
-![img.png](img.png)
+![img.png](../img.png)
 
 2. Распределение задач (Job Distribution)
    Что это?
