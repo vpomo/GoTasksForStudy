@@ -2,6 +2,13 @@ package main
 
 import "fmt"
 
+/**
+Дано: два неупорядоченных среза.
+   а) a := []int{37, 5, 1, 2} и b := []int{6, 2, 4, 37}.
+   б) a = []int{1, 1, 1} и b = []int{1, 1, 1, 1}.
+Верните их пересечение.
+*/
+
 func intersection(a, b []int) []int {
 	result := []int{}
 	counter := make(map[int]int)

@@ -6,11 +6,15 @@ import (
 	"time"
 )
 
+/**
+Напишите генератор случайных чисел.
+*/
+
 func generator(ch chan int) {
 	go func() {
 		r := rand.New(rand.NewSource(time.Now().UnixNano()))
 		for i := 1; i < 10; i++ {
-			r = rand.New(rand.NewSource(time.Now().UnixNano() / int64(i)))
+			r = rand.New(rand.NewSource(time.Now().UnixNano() / int64(2531*i)))
 			ch <- r.Intn(10)
 		}
 		close(ch)
